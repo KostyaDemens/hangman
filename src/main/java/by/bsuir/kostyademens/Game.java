@@ -5,12 +5,7 @@ import java.util.*;
 
 public class Game {
     private int mistakeCounter;
-    private final int maxNumberOfMistake = 6;
-    private Dictionary dictionary = new Dictionary();
-    private String secretWord;
-    private Set<String> listOfLetters;
-    private MaskedWord maskedWord;
-    private static Scaffold scaffold;
+    private final Dictionary dictionary = new Dictionary();
     private Scanner scanner;
 
 
@@ -47,9 +42,9 @@ public class Game {
 
     public void mainLogic() {
         mistakeCounter = 0;
-        listOfLetters = new HashSet<>();
-        secretWord = dictionary.getRandomWordFromFile().toLowerCase();
-        maskedWord = new MaskedWord(secretWord);
+        Set<String> listOfLetters = new HashSet<>();
+        String secretWord = dictionary.getRandomWordFromFile().toLowerCase();
+        MaskedWord maskedWord = new MaskedWord(secretWord);
         boolean winFlag = true;
         while (winFlag) {
             correctPrint();
@@ -70,8 +65,9 @@ public class Game {
                         System.out.println("**********\n" +
                                 "GAME  WIN\n" +
                                 "**********");
-                        System.out.printf("Загаданное слово: %s", secretWord.toUpperCase());
+                        System.out.printf("Загаданное слово: %s\n\n\n", secretWord.toUpperCase());
                         winFlag = false;
+                        startGame();
                     }
                 } else {
                     if (!listOfLetters.contains(letter)) {
@@ -80,14 +76,16 @@ public class Game {
                     }
                 }
             }
+            int maxNumberOfMistake = 6;
             if (mistakeCounter == maxNumberOfMistake) {
                 System.out.println("\n \n \n \n \n \n \n \n \n \n");
                 correctPrint();
                 System.out.println("**********\n" +
                         "GAME  OVER\n" +
                         "**********");
-                System.out.printf("Загаданное слово: %s", secretWord.toUpperCase());
+                System.out.printf("Загаданное слово: %s\n\n\n", secretWord.toUpperCase());
                 winFlag = false;
+                startGame();
             }
         }
     }
